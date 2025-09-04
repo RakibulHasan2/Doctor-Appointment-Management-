@@ -105,3 +105,4 @@ E:\JOB\DoctorAppointment\backend\DoctorAppointmentAPI\obj\Debug\net8.0\DoctorApp
 E:\JOB\DoctorAppointment\backend\DoctorAppointmentAPI\obj\Debug\net8.0\DoctorAppointmentAPI.genruntimeconfig.cache
 E:\JOB\DoctorAppointment\backend\DoctorAppointmentAPI\obj\Debug\net8.0\ref\DoctorAppointmentAPI.dll
 E:\JOB\DoctorAppointment\backend\DoctorAppointmentAPI\bin\Debug\net8.0\Documentation\Postman_Collection.json
+E:\JOB\DoctorAppointment\backend\DoctorAppointmentAPI\obj\Debug\net8.0\DoctorAppointmentAPI.sourcelink.json

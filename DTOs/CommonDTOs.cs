@@ -80,4 +80,9 @@ namespace DoctorAppointmentAPI.DTOs
         public IEnumerable<TimeSlotDto> TimeSlots { get; set; } = new List<TimeSlotDto>();
         public bool IsWorkingDay { get; set; }
     }
+
+    public class RejectDoctorDto
+    {
+        public string? Reason { get; set; }
+    }
 }
