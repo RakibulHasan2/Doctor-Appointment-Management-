@@ -5,7 +5,7 @@ The Doctor Appointment Management System API provides a comprehensive RESTful se
 
 ## Base URL
 ```
-Development: https://localhost:7001
+Development: http://localhost:5289/
 Production: [Your Production URL]
 ```
 

@@ -81,8 +81,8 @@ dotnet watch run  # for hot reload during development
 ```
 
 ### 6. Verify Installation
-- API: https://localhost:7001/swagger
-- Health Check: https://localhost:7001/api/health (if implemented)
+- API: http://localhost:5289/index.html
+- Health Check: http://localhost:5289/api/health (if implemented)
 
 ## Production Deployment
 
