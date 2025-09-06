@@ -76,6 +76,16 @@ DoctorAppointmentAPI/
 
 ## 🚀 Quick Start
 
+### 🆕 New Developer? Start Here!
+
+If you're setting up this project for the first time:
+
+1. **📋 [Pre-Setup Checklist](SETUP_CHECKLIST.md)** - Quick checklist of what you need
+2. **🛠️ [Complete Developer Setup Guide](DEVELOPER_SETUP.md)** - Step-by-step instructions
+3. **⚡ Quick Start Scripts:**
+   - **Windows**: Double-click `start.bat` or run in Command Prompt
+   - **Linux/Mac**: Run `chmod +x start.sh && ./start.sh`
+
 ### Prerequisites
 - .NET 8.0 SDK
 - MongoDB (local or cloud instance)
