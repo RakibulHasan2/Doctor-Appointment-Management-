@@ -1,4 +1,5 @@
 using DoctorAppointmentAPI.Models;
+using System.Text.Json.Serialization;
 
 namespace DoctorAppointmentAPI.DTOs
 {
@@ -45,6 +46,7 @@ namespace DoctorAppointmentAPI.DTOs
 
     public class DoctorAvailabilityDto
     {
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public DayOfWeek DayOfWeek { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }

@@ -1,6 +1,7 @@
 using DoctorAppointmentAPI.Configuration;
 using DoctorAppointmentAPI.Services;
 using Microsoft.OpenApi.Models;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,12 @@ builder.Services.Configure<ApiSettings>(
     builder.Configuration.GetSection("ApiSettings"));
 
 // Add services to the container
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        options.JsonSerializerOptions.PropertyNamingPolicy = null; // Keep original property names
+    });
 
 // MongoDB service
 builder.Services.AddSingleton<IMongoDbService, MongoDbService>();

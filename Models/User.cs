@@ -1,5 +1,6 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System.Text.Json.Serialization;
 
 namespace DoctorAppointmentAPI.Models
 {
@@ -19,6 +20,7 @@ namespace DoctorAppointmentAPI.Models
         public required string PasswordHash { get; set; }
 
         [BsonElement("role")]
+        [BsonRepresentation(BsonType.String)]
         public required UserRole Role { get; set; }
 
         [BsonElement("phone")]
@@ -34,6 +36,7 @@ namespace DoctorAppointmentAPI.Models
         public bool IsActive { get; set; } = true;
     }
 
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum UserRole
     {
         Admin,

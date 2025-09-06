@@ -131,10 +131,10 @@ namespace DoctorAppointmentAPI.Services
         {
             // Verify user exists and is a doctor
             var user = await _mongoDbService.Users
-                .Find(u => u.Id == createDoctorDto.UserId && u.Role == UserRole.Doctor)
+                .Find(u => u.Id == createDoctorDto.UserId)
                 .FirstOrDefaultAsync();
 
-            if (user == null)
+            if (user == null || user.Role != UserRole.Doctor)
                 throw new ArgumentException("User not found or not a doctor");
 
             // Verify specialty exists
