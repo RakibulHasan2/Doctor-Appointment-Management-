@@ -35,6 +35,15 @@ namespace DoctorAppointmentAPI.Models
         [BsonElement("isApproved")]
         public bool IsApproved { get; set; } = false;
 
+        [BsonElement("isRejected")]
+        public bool IsRejected { get; set; } = false;
+
+        [BsonElement("rejectionReason")]
+        public string? RejectionReason { get; set; }
+
+        [BsonElement("rejectedAt")]
+        public DateTime? RejectedAt { get; set; }
+
         [BsonElement("isActive")]
         public bool IsActive { get; set; } = true;
 

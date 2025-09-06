@@ -6,7 +6,24 @@ The Doctor Appointment Management System API provides a comprehensive RESTful se
 ## Base URL
 ```
 Development: http://localhost:5289/
-Production: [Your Production URL]
+Production: [Your Prod#### 3.12 Get Pending Approval Doctors
+```http
+GET /api/doctors/pending-approval
+```
+
+**Description:** Returns doctors who are neither approved nor rejected (truly pending).
+
+#### 3.13 Get Rejected Doctors
+```http
+GET /api/doctors/rejected
+```
+
+**Description:** Returns doctors who have been rejected with rejection details.
+
+#### 3.14 Delete Doctor
+```http
+DELETE /api/doctors/{id}
+```L]
 ```
 
 ## Authentication
@@ -326,7 +343,24 @@ Content-Type: application/json
 PATCH /api/doctors/{id}/approve
 ```
 
-#### 3.8 Update Doctor Availability
+#### 3.8 Reject Doctor
+```http
+PATCH /api/doctors/{id}/reject
+Content-Type: application/json
+
+{
+  "reason": "Invalid medical license"
+}
+```
+
+**Response:**
+```json
+{
+  "message": "Doctor rejected successfully"
+}
+```
+
+#### 3.9 Update Doctor Availability
 ```http
 PATCH /api/doctors/{id}/availability
 Content-Type: application/json

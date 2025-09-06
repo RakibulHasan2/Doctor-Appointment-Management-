@@ -15,6 +15,9 @@ namespace DoctorAppointmentAPI.DTOs
         public decimal ConsultationFee { get; set; }
         public List<DoctorAvailabilityDto> Availability { get; set; } = new();
         public bool IsApproved { get; set; }
+        public bool IsRejected { get; set; }
+        public string? RejectionReason { get; set; }
+        public DateTime? RejectedAt { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreatedAt { get; set; }
 

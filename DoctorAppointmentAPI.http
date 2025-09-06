@@ -4,3 +4,44 @@ GET {{DoctorAppointmentAPI_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+# Test Doctor Management Functionality
+
+# Get all doctors
+GET {{DoctorAppointmentAPI_HostAddress}}/api/doctors
+Accept: application/json
+
+###
+
+# Get pending approval doctors (neither approved nor rejected)
+GET {{DoctorAppointmentAPI_HostAddress}}/api/doctors/pending-approval
+Accept: application/json
+
+###
+
+# Get approved doctors only
+GET {{DoctorAppointmentAPI_HostAddress}}/api/doctors/approved
+Accept: application/json
+
+###
+
+# Get rejected doctors only
+GET {{DoctorAppointmentAPI_HostAddress}}/api/doctors/rejected
+Accept: application/json
+
+###
+
+# Reject a doctor (replace {doctorId} with actual doctor ID)
+PATCH {{DoctorAppointmentAPI_HostAddress}}/api/doctors/{doctorId}/reject
+Content-Type: application/json
+
+{
+  "reason": "Invalid medical license"
+}
+
+###
+
+# Approve a doctor (replace {doctorId} with actual doctor ID)
+PATCH {{DoctorAppointmentAPI_HostAddress}}/api/doctors/{doctorId}/approve
+
+###

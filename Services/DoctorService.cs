@@ -15,6 +15,7 @@ namespace DoctorAppointmentAPI.Services
         Task<DoctorDto?> UpdateDoctorAsync(string id, UpdateDoctorDto updateDoctorDto);
         Task<bool> DeleteDoctorAsync(string id);
         Task<bool> ApproveDoctorAsync(string id);
+        Task<bool> RejectDoctorAsync(string id, string reason);
         Task<bool> UpdateAvailabilityAsync(string id, List<DoctorAvailabilityDto> availability);
         Task<IEnumerable<AvailableSlotDto>> GetAvailableSlotsAsync(string doctorId, DateTime date);
     }
@@ -233,6 +234,29 @@ namespace DoctorAppointmentAPI.Services
                 return false;
 
             doctor.IsApproved = true;
+            doctor.IsRejected = false;
+            doctor.RejectionReason = null;
+            doctor.RejectedAt = null;
+            doctor.UpdatedAt = DateTime.UtcNow;
+
+            await _mongoDbService.Doctors.ReplaceOneAsync(d => d.Id == id, doctor);
+
+            return true;
+        }
+
+        public async Task<bool> RejectDoctorAsync(string id, string reason)
+        {
+            var doctor = await _mongoDbService.Doctors
+                .Find(d => d.Id == id)
+                .FirstOrDefaultAsync();
+
+            if (doctor == null)
+                return false;
+
+            doctor.IsApproved = false;
+            doctor.IsRejected = true;
+            doctor.RejectionReason = reason;
+            doctor.RejectedAt = DateTime.UtcNow;
             doctor.UpdatedAt = DateTime.UtcNow;
 
             await _mongoDbService.Doctors.ReplaceOneAsync(d => d.Id == id, doctor);

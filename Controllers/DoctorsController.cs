@@ -1,6 +1,7 @@
 using DoctorAppointmentAPI.DTOs;
 using DoctorAppointmentAPI.Services;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace DoctorAppointmentAPI.Controllers
 {
@@ -95,13 +96,29 @@ namespace DoctorAppointmentAPI.Controllers
             try
             {
                 var doctors = await _doctorService.GetAllDoctorsAsync();
-                var pendingDoctors = doctors.Where(d => !d.IsApproved);
+                var pendingDoctors = doctors.Where(d => !d.IsApproved && !d.IsRejected);
                 return Ok(pendingDoctors);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error retrieving pending approval doctors");
                 return StatusCode(500, new { message = "An error occurred while retrieving pending approval doctors" });
+            }
+        }
+
+        [HttpGet("rejected")]
+        public async Task<ActionResult<IEnumerable<DoctorDto>>> GetRejectedDoctors()
+        {
+            try
+            {
+                var doctors = await _doctorService.GetAllDoctorsAsync();
+                var rejectedDoctors = doctors.Where(d => d.IsRejected);
+                return Ok(rejectedDoctors);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving rejected doctors");
+                return StatusCode(500, new { message = "An error occurred while retrieving rejected doctors" });
             }
         }
 
@@ -185,13 +202,29 @@ namespace DoctorAppointmentAPI.Controllers
         }
 
         [HttpPatch("{id}/reject")]
-        public ActionResult RejectDoctor(string id, [FromBody] RejectDoctorDto rejectRequest)
+        public async Task<ActionResult> RejectDoctor(string id, [FromBody] RejectDoctorDto rejectRequest)
         {
             try
             {
-                // Since RejectDoctorAsync doesn't exist, let's use a different approach
-                // For now, we'll just return a not implemented message
-                return BadRequest(new { message = "Doctor rejection functionality not implemented yet" });
+                // Validate input
+                if (!IsValidObjectId(id))
+                {
+                    return BadRequest(new { message = "Invalid doctor ID format" });
+                }
+
+                if (string.IsNullOrWhiteSpace(rejectRequest?.Reason))
+                {
+                    return BadRequest(new { message = "Rejection reason is required" });
+                }
+
+                var success = await _doctorService.RejectDoctorAsync(id, rejectRequest.Reason);
+
+                if (!success)
+                {
+                    return NotFound(new { message = "Doctor not found" });
+                }
+
+                return Ok(new { message = "Doctor rejected successfully" });
             }
             catch (Exception ex)
             {
@@ -238,6 +271,11 @@ namespace DoctorAppointmentAPI.Controllers
                 _logger.LogError(ex, "Error deleting doctor with ID: {DoctorId}", id);
                 return StatusCode(500, new { message = "An error occurred while deleting the doctor" });
             }
+        }
+
+        private static bool IsValidObjectId(string id)
+        {
+            return ObjectId.TryParse(id, out _);
         }
     }
 }
